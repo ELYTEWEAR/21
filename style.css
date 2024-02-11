@@ -1,42 +1,52 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #333;
+    background-color: #282c34;
+    color: #ffffff;
 }
 
 .slot-machine {
-    width: 320px;
+    width: 360px;
     padding: 20px;
-    background-color: #fff;
+    background-color: #1c1e24;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.title {
+    color: #ffd700; /* Gold color for an elite feel */
+    margin-bottom: 20px;
 }
 
 .reels {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
 .reel {
     width: 64px;
-    height: 128px;
-    background-color: #eee;
-    border: 1px solid #ddd;
+    height: 192px;
+    background-color: #333740;
+    border: 1px solid #555;
     border-radius: 5px;
     overflow: hidden;
-    position: relative;
+}
+
+.symbols {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .symbol {
     font-size: 2em;
-    line-height: 1em;
-    height: 1em;
-    margin-bottom: -1em;
+    margin: 16px 0;
 }
 
 .controls {
@@ -44,8 +54,8 @@ body {
 }
 
 .button {
-    background-color: #0088cc;
-    color: #fff;
+    background-color: #ffd700;
+    color: #282c34;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -55,10 +65,9 @@ body {
 }
 
 .button:hover {
-    background-color: #005599;
+    background-color: #cca300;
 }
 
 .balance, .message {
-    color: #333;
     margin-top: 10px;
 }
