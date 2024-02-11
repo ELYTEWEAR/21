@@ -1,23 +1,59 @@
 document.getElementById('spinButton').addEventListener('click', spinReels);
 
+let balance = 100; // Starting balance
+
 function spinReels() {
     const reels = document.querySelectorAll('.reel');
 
     reels.forEach((reel, index) => {
-        // Trigger the spinning animation
+        // Add spinning effect
         reel.classList.add('spinning');
 
-        // Set a timeout to stop the spin and display the result
         setTimeout(() => {
+            // Stop spinning effect
             reel.classList.remove('spinning');
 
-            // Randomly select the symbol to display
-            const symbols = reel.querySelectorAll('.symbol');
-            symbols.forEach(sym => sym.style.opacity = '0'); // Hide all symbols
-            const selectedSymbol = Math.floor(Math.random() * symbols.length);
-            symbols[selectedSymbol].style.opacity = '1'; // Show selected symbol
+            // Randomly select a symbol to show
+            const symbols = ["🍒", "🍋", "🍉", "🔔", "💎"];
+            const selectedSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            reel.innerHTML = ''; // Clear previous symbols
+            const symbolElement = document.createElement('div');
+            symbolElement.classList.add('symbol');
+            symbolElement.textContent = selectedSymbol;
+            reel.appendChild(symbolElement);
+
+            // Show the selected symbol
+            setTimeout(() => {
+                symbolElement.style.opacity = '1';
+            }, 100); // Short delay to ensure the opacity transition runs
+
         }, 1000 + index * 500); // Stagger the stopping of each reel
     });
 
-    // Update balance and message as before
+    updateBalanceAndMessage();
 }
+
+function updateBalanceAndMessage() {
+    // Simple logic for win/lose
+    if (Math.random() < 0.5) { // 50% chance to win
+        balance += 10; // Win: increase balance
+        document.getElementById('message').textContent = "You win!";
+    } else {
+        balance -= 10; // Lose: decrease balance
+        document.getElementById('message').textContent = "You lose!";
+    }
+
+    // Update balance display
+    document.getElementById('balance').textContent = `Balance: $${balance}`;
+
+    // Check for game over
+    if (balance <= 0) {
+        document.getElementById('message').textContent = "Game Over!";
+        document.getElementById('spinButton').disabled = true; // Disable spin button
+    }
+}
+
+// Initial setup
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('balance').textContent = `Balance: $${balance}`;
+});
