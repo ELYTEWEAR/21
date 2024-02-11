@@ -1,29 +1,38 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-}
-#slotMachine {
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* style.css */
+.slot-machine {
+    width: 300px;
+    margin: 0 auto;
     text-align: center;
 }
+
+.reels {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #eee;
+}
+
 .reel {
-    display: inline-block;
-    width: 100px;
+    width: 60px;
     height: 100px;
-    margin: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #999;
+    background-color: #fff;
+    border-radius: 5px;
     background-size: cover;
     background-position: center;
 }
-button {
+
+.controls {
     margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+}
+
+.balance {
+    margin-top: 10px;
+}
+
+.message {
+    margin-top: 10px;
+    color: red;
 }
