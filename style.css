@@ -36,3 +36,17 @@
     margin-top: 10px;
     color: red;
 }
+.symbol {
+    font-size: 2em; /* Adjust size as needed */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+@keyframes spin {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+.spinning .symbol {
+    animation: spin 0.5s infinite;
+}
