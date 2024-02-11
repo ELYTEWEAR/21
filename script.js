@@ -1,59 +1,62 @@
 document.getElementById('spinButton').addEventListener('click', spinReels);
 
 let balance = 100; // Starting balance
+const spinCost = 5;
+const reelSymbols = ["🍒", "🍋", "🍉", "🔔", "💎", "🎰"]; // Include a special symbol for bonus
+const freeSpinSymbol = "🎰"; // Bonus symbol for free spins
+let freeSpins = 0;
 
 function spinReels() {
-    const reels = document.querySelectorAll('.reel');
+    if (balance < spinCost && freeSpins === 0) {
+        alert("Not enough balance for a spin.");
+        return;
+    }
 
-    reels.forEach((reel, index) => {
-        // Add spinning effect
-        reel.classList.add('spinning');
-
-        setTimeout(() => {
-            // Stop spinning effect
-            reel.classList.remove('spinning');
-
-            // Randomly select a symbol to show
-            const symbols = ["🍒", "🍋", "🍉", "🔔", "💎"];
-            const selectedSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-            reel.innerHTML = ''; // Clear previous symbols
-            const symbolElement = document.createElement('div');
-            symbolElement.classList.add('symbol');
-            symbolElement.textContent = selectedSymbol;
-            reel.appendChild(symbolElement);
-
-            // Show the selected symbol
-            setTimeout(() => {
-                symbolElement.style.opacity = '1';
-            }, 100); // Short delay to ensure the opacity transition runs
-
-        }, 1000 + index * 500); // Stagger the stopping of each reel
-    });
-
-    updateBalanceAndMessage();
-}
-
-function updateBalanceAndMessage() {
-    // Simple logic for win/lose
-    if (Math.random() < 0.5) { // 50% chance to win
-        balance += 10; // Win: increase balance
-        document.getElementById('message').textContent = "You win!";
+    if (freeSpins === 0) {
+        balance -= spinCost; // Deduct cost of spin
     } else {
-        balance -= 10; // Lose: decrease balance
-        document.getElementById('message').textContent = "You lose!";
+        freeSpins--; // Use a free spin
     }
 
-    // Update balance display
-    document.getElementById('balance').textContent = `Balance: $${balance}`;
+    const results = [];
+    for (let i = 1; i <= 3; i++) {
+        const symbol = reelSymbols[Math.floor(Math.random() * reelSymbols.length)];
+        document.getElementById(`reel${i}`).textContent = symbol;
+        results.push(symbol);
+    }
 
-    // Check for game over
-    if (balance <= 0) {
-        document.getElementById('message').textContent = "Game Over!";
-        document.getElementById('spinButton').disabled = true; // Disable spin button
+    checkResults(results);
+    updateDisplay();
+}
+
+function checkResults(results) {
+    const uniqueSymbols = new Set(results);
+
+    if (uniqueSymbols.size === 1) {
+        // All symbols match
+        win(50);
+    } else if (results.includes(freeSpinSymbol)) {
+        // Bonus symbol for free spins
+        freeSpins += 1;
+        document.getElementById('message').textContent = "You won a free spin!";
+    }
+
+    // Implement scatter feature logic here
+
+    if (freeSpins > 0) {
+        document.getElementById('message').textContent += " Free spins left: " + freeSpins;
     }
 }
 
-// Initial setup
-document.addEventListener('DOMContentLoaded', () => {
+function win(amount) {
+    balance += amount;
+    document.getElementById('message').textContent = "You win $" + amount + "!";
+}
+
+function updateDisplay() {
     document.getElementById('balance').textContent = `Balance: $${balance}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
 });
