@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #slotMachine {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .reel {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            margin: 5px;
+            font-size: 2em;
+            border: 1px solid #ddd;
+            line-height: 64px;
+        }
+        #balance {
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="slotMachine">
+        <div id="reels">
+            <div class="reel">🍒</div>
+            <div class="reel">🍋</div>
+            <div class="reel">🍋</div>
+        </div>
+        <div id="balance">Balance: $100</div>
+        <button id="spinButton">Spin</button>
+    </div>
+
+    <script>
+        const reels = document.querySelectorAll('.reel');
+        const balanceDisplay = document.getElementById('balance');
+        const spinButton = document.getElementById('spinButton');
+        const symbols = ['🍒', '🍋', '🍉', '⭐', '7️⃣'];
+        let balance = 100;
+
+        function spinReels() {
+            balance -= 10; // Cost per spin
+            for (const reel of reels) {
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                reel.textContent = randomSymbol;
+            }
+            checkWin();
+            updateBalanceDisplay();
+        }
+
+        function checkWin() {
+            const uniqueSymbols = new Set();
+            reels.forEach(reel => uniqueSymbols.add(reel.textContent));
+            if (uniqueSymbols.size === 1) {
+                // All symbols match, big win!
+                balance += 50;
+                alert('Big Win!');
+            } else if (uniqueSymbols.size === 2) {
+                // Two symbols match, small win
+                balance += 20;
+                alert('Small Win!');
+            }
+            // Bonus round logic could be added here
+        }
+
+        function updateBalanceDisplay() {
+            balanceDisplay.textContent = `Balance: $${balance}`;
+        }
+
+        spinButton.addEventListener('click', () => {
+            if (balance >= 10) {
+                spinReels();
+            } else {
+                alert('Insufficient balance!');
+            }
+        });
+    </script>
+</body>
+</html>
