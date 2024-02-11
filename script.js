@@ -1,25 +1,23 @@
-/* script.js */
 document.getElementById('spinButton').addEventListener('click', spinReels);
 
-let balance = 100; // Starting balance
-
 function spinReels() {
-    // Randomly update reel backgrounds to simulate spinning
-    const symbols = ["🍒", "🍋", "🍉", "🔔", "💎"];
-    for (let i = 1; i <= 3; i++) {
-        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-        document.getElementById(`reel${i}`).textContent = symbol;
-    }
+    const reels = document.querySelectorAll('.reel');
 
-    // Simple win/lose logic to update balance
-    if (Math.random() < 0.5) { // 50% chance to win
-        balance += 10; // Win: increase balance
-        document.getElementById('message').textContent = "You win!";
-    } else {
-        balance -= 10; // Lose: decrease balance
-        document.getElementById('message').textContent = "You lose!";
-    }
+    reels.forEach((reel, index) => {
+        // Trigger the spinning animation
+        reel.classList.add('spinning');
 
-    // Update balance display
-    document.getElementById('balance').textContent = `Balance: $${balance}`;
+        // Set a timeout to stop the spin and display the result
+        setTimeout(() => {
+            reel.classList.remove('spinning');
+
+            // Randomly select the symbol to display
+            const symbols = reel.querySelectorAll('.symbol');
+            symbols.forEach(sym => sym.style.opacity = '0'); // Hide all symbols
+            const selectedSymbol = Math.floor(Math.random() * symbols.length);
+            symbols[selectedSymbol].style.opacity = '1'; // Show selected symbol
+        }, 1000 + index * 500); // Stagger the stopping of each reel
+    });
+
+    // Update balance and message as before
 }
