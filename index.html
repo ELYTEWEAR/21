@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELYTE Slot</title>
+    <title>Slot Machine Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="slotMachine">
-        <div id="reels">
-            <div class="reel" data-index="0"></div>
-            <div class="reel" data-index="1"></div>
-            <div class="reel" data-index="2"></div>
-            <div class="reel" data-index="3"></div>
+    <div id="slotMachine" class="slot-machine">
+        <div id="reels" class="reels">
+            <div class="reel" id="reel1"></div>
+            <div class="reel" id="reel2"></div>
+            <div class="reel" id="reel3"></div>
         </div>
-        <div id="balance">Balance: $100</div>
-        <button id="spinButton">Spin</button>
+        <div id="controls" class="controls">
+            <button id="spinButton">Spin</button>
+        </div>
+        <div id="balance" class="balance">Balance: $100</div>
+        <div id="message" class="message"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
